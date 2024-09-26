@@ -1,20 +1,17 @@
 using UnityEngine;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine.UI;
-using System;
 using System.Collections;
+using UnityEngine.Networking;
 
 public class MonsterBehaviour : MonoBehaviour
 {
     private Pokemon pokemon;
-    public Image monsterImage;
+    public SpriteRenderer monsterSprite;
 
     public void SetPokemon(Pokemon newPokemon)
     {
         pokemon = newPokemon;
         // º”‘ÿ∏ﬂ«ÂÕºœÒ
-        StartCoroutine(LoadImage(pokemon.image.hires, monsterImage));
+        StartCoroutine(LoadImage(pokemon.image.hires));
     }
 
     public void OnClick()
@@ -22,15 +19,21 @@ public class MonsterBehaviour : MonoBehaviour
         PokeDexManager.instance.DisplayPokemon(pokemon);
     }
 
-    IEnumerator LoadImage(string url, Image image)
+    IEnumerator LoadImage(string url)
     {
-        WWW www = new WWW(url);
-        yield return www;
-        if (www.error == null)
+        using (UnityWebRequest webRequest = UnityWebRequestTexture.GetTexture(url))
         {
-            Texture2D texture = www.texture;
-            image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                Texture2D texture = DownloadHandlerTexture.GetContent(webRequest);
+                monsterSprite.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            }
+            else
+            {
+                Debug.LogError("Error loading image: " + webRequest.error);
+            }
         }
     }
 }
-

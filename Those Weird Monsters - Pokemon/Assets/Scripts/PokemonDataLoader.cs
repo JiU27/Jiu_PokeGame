@@ -27,7 +27,6 @@ public class Pokemon
     }
 }
 
-// 定义场景类型枚举
 public enum LandType
 {
     GrassLand,

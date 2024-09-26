@@ -1,4 +1,3 @@
-// LandManager.cs
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -9,15 +8,23 @@ public class LandManager : MonoBehaviour
     public Transform[] spawnPoints;
     public PokemonDataLoader dataLoader;
 
+    [System.Obsolete]
     void Start()
     {
         if (dataLoader == null)
         {
-            Debug.LogError("PokemonDataLoader is not assigned!");
+            Debug.LogError("PokemonDataLoader is None!");
             return;
         }
 
         List<Pokemon> landPokemon = dataLoader.GetPokemonByLandType(currentLandType);
+
+        string list = $"We found these pokemon for {currentLandType}:\n";
+        foreach (Pokemon pokemon in landPokemon)
+        {
+            list += $"{pokemon.id}\t{pokemon.name.english}\n";
+        }
+        Debug.Log(list);
 
         if (landPokemon.Count == 0)
         {

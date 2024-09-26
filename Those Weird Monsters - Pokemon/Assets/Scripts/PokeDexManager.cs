@@ -1,21 +1,20 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.UI;
-using System;
 using System.Collections;
-using TMPro; // 添加 TextMeshPro 命名空间
+using TMPro;
+using UnityEngine.Networking;
 
 public class PokeDexManager : MonoBehaviour
 {
     public static PokeDexManager instance;
 
-    public TextMeshPro nameText;     // 改为 TextMeshPro
-    public TextMeshPro typeText;     // 改为 TextMeshPro
-    public TextMeshPro choice1Text;  // 改为 TextMeshPro
-    public TextMeshPro choice2Text;  // 改为 TextMeshPro
-    public TextMeshPro hintText;     // 改为 TextMeshPro
-    public Image pokePhoto;
+    public TextMeshPro nameText;
+    public TextMeshPro typeText;
+    public TextMeshPro choice1Text;
+    public TextMeshPro choice2Text;
+    public TextMeshPro hintText;
+    public SpriteRenderer pokePhoto;
 
     private Dictionary<int, Pokemon> discoveredPokemon = new Dictionary<int, Pokemon>();
     private Pokemon currentPokemon;
@@ -49,7 +48,7 @@ public class PokeDexManager : MonoBehaviour
         choice1Text.text = "";
         choice2Text.text = "";
         hintText.text = "";
-        StartCoroutine(LoadImage(pokemon.image.thumbnail, pokePhoto));
+        StartCoroutine(LoadImage(pokemon.image.thumbnail));
     }
 
     private void DisplayNewPokemon(Pokemon pokemon)
@@ -86,7 +85,7 @@ public class PokeDexManager : MonoBehaviour
         {
             typeText.text = $"Type: {correctType}";
             hintText.text = "";
-            StartCoroutine(LoadImage(currentPokemon.image.thumbnail, pokePhoto));
+            StartCoroutine(LoadImage(currentPokemon.image.thumbnail));
             discoveredPokemon.Add(currentPokemon.id, currentPokemon);
         }
         else
@@ -95,14 +94,21 @@ public class PokeDexManager : MonoBehaviour
         }
     }
 
-    IEnumerator LoadImage(string url, Image image)
+    IEnumerator LoadImage(string url)
     {
-        WWW www = new WWW(url);
-        yield return www;
-        if (www.error == null)
+        using (UnityWebRequest webRequest = UnityWebRequestTexture.GetTexture(url))
         {
-            Texture2D texture = www.texture;
-            image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                Texture2D texture = DownloadHandlerTexture.GetContent(webRequest);
+                pokePhoto.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            }
+            else
+            {
+                Debug.LogError("Error loading image: " + webRequest.error);
+            }
         }
     }
 

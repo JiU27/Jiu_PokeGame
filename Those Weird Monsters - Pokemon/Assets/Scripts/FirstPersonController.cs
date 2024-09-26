@@ -20,7 +20,6 @@ public class FirstPersonController : MonoBehaviour
 
     private void Update()
     {
-        // 处理鼠标输入
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
@@ -32,17 +31,14 @@ public class FirstPersonController : MonoBehaviour
         verticalRotation -= mouseY;
         verticalRotation = Mathf.Clamp(verticalRotation, -maxVerticalAngle, maxVerticalAngle);
 
-        // 应用旋转
         transform.localRotation = Quaternion.Euler(0f, horizontalRotation, 0f);
         playerCamera.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
 
         // 处理移动输入
         float moveForward = Input.GetAxis("Vertical");
 
-        // 计算移动方向
         Vector3 movement = transform.forward * moveForward;
 
-        // 应用移动
         transform.position += movement * moveSpeed * Time.deltaTime;
     }
 }
