@@ -12,6 +12,8 @@ public class Pokemon
     public Name name;
     public string[] type;
     public Image image;
+    public LandType foundInLandType { get; set; } // 新添加的属性
+
 
     [System.Serializable]
     public class Name

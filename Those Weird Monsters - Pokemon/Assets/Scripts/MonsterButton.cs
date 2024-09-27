@@ -20,6 +20,6 @@ public class MonsterButton : MonoBehaviour, IPointerClickHandler
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

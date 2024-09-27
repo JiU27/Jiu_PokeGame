@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 2326523783310349951}
   - component: {fileID: 2144506395581720822}
   - component: {fileID: -7085841216610369847}
-  - component: {fileID: 8590505319265345576}
-  - component: {fileID: 8762745406114868637}
+  - component: {fileID: 1317324144008255636}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -29,8 +28,8 @@ RectTransform:
   m_GameObject: {fileID: 7030577773576432011}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -104,19 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterSprite: {fileID: 2144506395581720822}
---- !u!114 &8590505319265345576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7030577773576432011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29c7f75142f3c4f45bc978b5f0870038, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!65 &8762745406114868637
+--- !u!65 &1317324144008255636
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,5 +122,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Size: {x: 2, y: 2, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
