@@ -2263,7 +2263,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   mouseSensitivity: 2
+<<<<<<< Updated upstream
   maxVerticalAngle: 60
+=======
+  maxVerticalAngle: 80
+>>>>>>> Stashed changes
   maxHorizontalAngle: 360
 --- !u!54 &1644776086
 Rigidbody:
@@ -3781,7 +3785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d1f4772a0439a54a9ae02865b3befe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTime: 60
+  gameTime: 120
   timerSlider: {fileID: 1746744449}
   signedMonsterPrefab: {fileID: 1614395714399583811, guid: c848fe2cae958094a80c5f209adfbb94, type: 3}
   scrollView: {fileID: 1685366024}
