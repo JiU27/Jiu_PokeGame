@@ -651,6 +651,9 @@ GameObject:
   - component: {fileID: 2323317276018230998}
   - component: {fileID: 1965204543888185064}
   - component: {fileID: 4743483876966376884}
+  - component: {fileID: 2119779748186776173}
+  - component: {fileID: 7365703480191188619}
+  - component: {fileID: 8478236361777445593}
   m_Layer: 0
   m_Name: GrassLand
   m_TagString: Land
@@ -718,6 +721,7 @@ Transform:
   - {fileID: 1861150012212070031}
   - {fileID: 3712967526059226299}
   - {fileID: 5685846312681146625}
+  - {fileID: 1841151950413678779}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6012375753180103015
@@ -824,9 +828,80 @@ MonoBehaviour:
   - {fileID: 5685846312681146625}
   generationDistance: 20
   landCheckRadius: 2
-  oxygenStationPrefab: {fileID: 989884386135004713, guid: 6a7eae29c3eac724dac9a5e290c60171, type: 3}
+  oxygenStationPrefab: {fileID: 8416101205031692444, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
   oxygenStationSpawnHeight: 0.5
-  maxSpawnAttempts: 100
+  maxSpawnAttempts: 0
+--- !u!114 &2119779748186776173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8750268776393551698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: f18c79d7576dc1e4a9ed87af7d613d7c, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!114 &7365703480191188619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8750268776393551698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eeb5dc026fdf4b488bc7ae0138ab719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_StartPoint: {x: 0, y: 0, z: -17.54}
+  m_EndPoint: {x: 0, y: 0, z: -13.89}
+  m_Width: 25.016478
+  m_CostModifier: -1
+  m_Bidirectional: 1
+  m_AutoUpdatePosition: 0
+  m_Area: 0
+--- !u!114 &8478236361777445593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8750268776393551698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eeb5dc026fdf4b488bc7ae0138ab719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_StartPoint: {x: 0, y: 0, z: 14.1}
+  m_EndPoint: {x: 0, y: 0, z: 17.45}
+  m_Width: 25
+  m_CostModifier: -1
+  m_Bidirectional: 1
+  m_AutoUpdatePosition: 0
+  m_Area: 0
 --- !u!1 &8904980907170801473
 GameObject:
   m_ObjectHideFlags: 0
@@ -2377,6 +2452,68 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3356751432537613521, guid: ffbddc4ef9676cc419e81e06aaa836d8, type: 3}
   m_PrefabInstance: {fileID: 4563105219614174366}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4703619703353755951
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8303084703490464008}
+    m_Modifications:
+    - target: {fileID: 6398358065183261076, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.46238232
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398358065183261076, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398358065183261076, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.2131376
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398358065183261076, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398358065183261076, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398358065183261076, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398358065183261076, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398358065183261076, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398358065183261076, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398358065183261076, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416101205031692444, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
+      propertyPath: m_Name
+      value: OxygenStation
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
+--- !u!4 &1841151950413678779 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6398358065183261076, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
+  m_PrefabInstance: {fileID: 4703619703353755951}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5269096881437944356
 PrefabInstance:

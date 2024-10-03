@@ -159,6 +159,9 @@ GameObject:
   - component: {fileID: 167571718783655285}
   - component: {fileID: 8452979300653134825}
   - component: {fileID: 5030496828114762767}
+  - component: {fileID: 2966611050951209817}
+  - component: {fileID: -6516800697449654826}
+  - component: {fileID: -8072935080027994910}
   m_Layer: 0
   m_Name: RockLand
   m_TagString: Land
@@ -312,7 +315,78 @@ MonoBehaviour:
   landCheckRadius: 2
   oxygenStationPrefab: {fileID: 8416101205031692444, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
   oxygenStationSpawnHeight: 0.5
-  maxSpawnAttempts: 0
+  maxSpawnAttempts: 100
+--- !u!114 &2966611050951209817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989884386135004713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
+--- !u!114 &-6516800697449654826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989884386135004713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eeb5dc026fdf4b488bc7ae0138ab719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_StartPoint: {x: 0, y: 0, z: -17.54}
+  m_EndPoint: {x: 0, y: 0, z: -13.89}
+  m_Width: 25.016478
+  m_CostModifier: -1
+  m_Bidirectional: 1
+  m_AutoUpdatePosition: 0
+  m_Area: 0
+--- !u!114 &-8072935080027994910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989884386135004713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eeb5dc026fdf4b488bc7ae0138ab719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_StartPoint: {x: 0, y: 0, z: 14.1}
+  m_EndPoint: {x: 0, y: 0, z: 17.45}
+  m_Width: 25
+  m_CostModifier: -1
+  m_Bidirectional: 1
+  m_AutoUpdatePosition: 0
+  m_Area: 0
 --- !u!1 &2019380844501505996
 GameObject:
   m_ObjectHideFlags: 0

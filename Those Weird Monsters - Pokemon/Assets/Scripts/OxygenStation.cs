@@ -26,7 +26,7 @@ public class OxygenStation : MonoBehaviour
             Debug.LogError("Renderer component not found on OxygenStation!");
         }
 
-        // ≥ı ºªØ≤ƒ÷ 
+        isActive = true;
         UpdateMaterial();
     }
 

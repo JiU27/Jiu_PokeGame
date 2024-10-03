@@ -37,7 +37,7 @@ public class PokeDexManager : MonoBehaviour
     private bool isGuessingType = false;
 
     private float interactionResetTimer = 0f;
-    private const float interactionResetDelay = 2f; // 2秒后重置交互
+    private const float interactionResetDelay = 2f; 
 
 
     private Dictionary<string, Color> typeColors = new Dictionary<string, Color>
@@ -74,10 +74,6 @@ public class PokeDexManager : MonoBehaviour
         if (mainCamera == null)
         {
             mainCamera = Camera.main;
-            if (mainCamera == null)
-            {
-                Debug.LogError("No camera found. Please assign a camera to the PokeDexManager or tag your main camera as 'MainCamera'.");
-            }
         }
 
         ClearDisplay();
@@ -94,7 +90,9 @@ public class PokeDexManager : MonoBehaviour
             if (Input.GetMouseButton(0))
             {
                 captureProgress += Time.deltaTime;
-                dataLoadingSlider.value = captureProgress / captureTime;
+                // 归一化进度值
+                float normalizedProgress = Mathf.Clamp01(captureProgress / captureTime);
+                dataLoadingSlider.value = normalizedProgress;
 
                 if (captureProgress >= captureTime)
                 {
@@ -164,7 +162,7 @@ public class PokeDexManager : MonoBehaviour
         typeText.text = $"Type: {string.Join(", ", pokemon.type)}";
         choice1Text.text = "";
         choice2Text.text = "";
-        hintText.text = "You've already captured this Pokemon!";
+        hintText.text = "Monster is in system";
         StartCoroutine(LoadImage(pokemon.image.thumbnail));
         isInteractionEnabled = false;
         interactionResetTimer = 0f; // 开始计时以重置交互
@@ -192,8 +190,8 @@ public class PokeDexManager : MonoBehaviour
         if (!isInteractionEnabled) return;
 
         currentPokemon = pokemon;
-        captureTime = currentPokemon.GetCaptureTime();
-        dataLoadingSlider.maxValue = captureTime;
+        captureTime = currentPokemon.GetCaptureTime(); // 保留原有的计算
+        dataLoadingSlider.maxValue = 1f; // 设置最大值为 1
         dataLoadingSlider.value = 0f;
         dataLoadingSlider.gameObject.SetActive(true);
 
@@ -201,12 +199,7 @@ public class PokeDexManager : MonoBehaviour
         captureProgress = 0f;
 
         ClearDisplay();
-        nameText.text = "";
-        typeText.text = "";
-        choice1Text.text = "";
-        choice2Text.text = "";
-        pokePhoto.sprite = null;
-        hintText.text = "Hold the mouse button to scaning.";
+        hintText.text = "Hold the mouse button to scan.";
     }
 
 
@@ -229,7 +222,7 @@ public class PokeDexManager : MonoBehaviour
     {
         isCapturing = false;
         dataLoadingSlider.gameObject.SetActive(false);
-        hintText.text = "Information getting failed.";
+        hintText.text = "Scanning failed. Try again.";
         StartCoroutine(ResetCaptureAfterDelay(1f));
     }
 

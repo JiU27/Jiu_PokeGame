@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 2144506395581720822}
   - component: {fileID: -7085841216610369847}
   - component: {fileID: 1317324144008255636}
+  - component: {fileID: 6908416124212356747}
+  - component: {fileID: -3892583745291394264}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -103,6 +105,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterSprite: {fileID: 2144506395581720822}
+  weakFleeRange: 6
+  weakFleeTime: 6
+  weakObservationTime: 2
+  curiousApproachRange: 8
+  curiousStopDistance: 3
+  strongTerritoryRadius: 6
+  warningSound: {fileID: 0}
 --- !u!65 &1317324144008255636
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -124,3 +133,52 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 2, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!195 &6908416124212356747
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7030577773576432011}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!54 &-3892583745291394264
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7030577773576432011}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
