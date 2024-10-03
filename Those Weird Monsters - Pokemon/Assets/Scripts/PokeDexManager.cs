@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections;
 using TMPro;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class PokeDexManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class PokeDexManager : MonoBehaviour
     public TextMeshPro choice2Text;
     public TextMeshPro hintText;
     public SpriteRenderer pokePhoto;
+    public Slider dataLoadingSlider;
 
     private Dictionary<int, Pokemon> discoveredPokemon = new Dictionary<int, Pokemon>();
     private Pokemon currentPokemon;
@@ -27,11 +29,16 @@ public class PokeDexManager : MonoBehaviour
     public LayerMask raycastLayerMask = -1;
 
     private bool isInteractionEnabled = true;
-    private bool hasPokemonSelected = false;
-    private float cooldownTimer = 0f;
-    private const float cooldownDuration = 3f;
+    private bool isCapturing = false;
+    private float captureProgress = 0f;
+    private float captureTime;
     private bool isRenamingMode = false;
     private string newName = "";
+    private bool isGuessingType = false;
+
+    private float interactionResetTimer = 0f;
+    private const float interactionResetDelay = 2f; // 2秒后重置交互
+
 
     private Dictionary<string, Color> typeColors = new Dictionary<string, Color>
     {
@@ -57,6 +64,8 @@ public class PokeDexManager : MonoBehaviour
 
     void Awake()
     {
+        dataLoadingSlider.gameObject.SetActive(false);
+
         if (instance == null)
             instance = this;
         else if (instance != this)
@@ -74,48 +83,37 @@ public class PokeDexManager : MonoBehaviour
         ClearDisplay();
     }
 
+
+
     void Update()
     {
         if (mainCamera == null) return;
 
-        if (isRenamingMode)
+        if (isCapturing)
         {
-            HandleRenaming();
-            return;
-        }
-
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(ray.origin, ray.direction * raycastDistance, raycastColor);
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, raycastDistance, raycastLayerMask))
+            if (Input.GetMouseButton(0))
             {
-                MonsterBehaviour monster = hit.collider.GetComponent<MonsterBehaviour>();
-                if (monster != null)
+                captureProgress += Time.deltaTime;
+                dataLoadingSlider.value = captureProgress / captureTime;
+
+                if (captureProgress >= captureTime)
                 {
-                    Pokemon pokemon = monster.GetPokemon();
-                    if (discoveredPokemon.ContainsKey(pokemon.id))
-                    {
-                        Debug.Log($"Pokemon already discovered: {pokemon.name.english}");
-                        Debug.Log($"Stored information: {JsonUtility.ToJson(discoveredPokemon[pokemon.id], true)}");
-                    }
-                    DisplayPokemon(pokemon);
+                    CompletePokemonCapture();
+                }
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                if (captureProgress < captureTime)
+                {
+                    CancelPokemonCapture();
                 }
             }
         }
-
-        if (cooldownTimer > 0)
+        else if (isRenamingMode)
         {
-            cooldownTimer -= Time.deltaTime;
-            if (cooldownTimer <= 0)
-            {
-                EnableChoices();
-            }
+            HandleRenaming();
         }
-
-        if (isInteractionEnabled && hasPokemonSelected)
+        else if (isGuessingType)
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
@@ -126,20 +124,28 @@ public class PokeDexManager : MonoBehaviour
                 MakeGuess(2);
             }
         }
+        else if (!isInteractionEnabled)
+        {
+            interactionResetTimer += Time.deltaTime;
+            if (interactionResetTimer >= interactionResetDelay)
+            {
+                ResetInteraction();
+            }
+        }
     }
 
     private void HandleRenaming()
     {
         foreach (char c in Input.inputString)
         {
-            if (c == '\b') // 退格键
+            if (c == '\b') // Backspace key
             {
                 if (newName.Length > 0)
                 {
                     newName = newName.Substring(0, newName.Length - 1);
                 }
             }
-            else if (c == '\n' || c == '\r') // 回车键
+            else if (c == '\n' || c == '\r') // Enter key
             {
                 ConfirmRenaming();
                 return;
@@ -152,6 +158,24 @@ public class PokeDexManager : MonoBehaviour
         nameText.text = $"Name: {newName}";
     }
 
+    private void DisplayDiscoveredPokemon(Pokemon pokemon)
+    {
+        nameText.text = $"Name: {pokemon.name.english}";
+        typeText.text = $"Type: {string.Join(", ", pokemon.type)}";
+        choice1Text.text = "";
+        choice2Text.text = "";
+        hintText.text = "You've already captured this Pokemon!";
+        StartCoroutine(LoadImage(pokemon.image.thumbnail));
+        isInteractionEnabled = false;
+        interactionResetTimer = 0f; // 开始计时以重置交互
+    }
+
+    private void ResetInteraction()
+    {
+        isInteractionEnabled = true;
+        interactionResetTimer = 0f;
+        ClearDisplay();
+    }
 
     private void ClearDisplay()
     {
@@ -161,43 +185,121 @@ public class PokeDexManager : MonoBehaviour
         choice2Text.text = "";
         hintText.text = "";
         pokePhoto.sprite = null;
-        hasPokemonSelected = false;
-        isInteractionEnabled = true;
     }
 
-    public void DisplayPokemon(Pokemon pokemon)
+    public void StartPokemonCapture(Pokemon pokemon)
     {
-        currentPokemon = pokemon;
-        hasPokemonSelected = true;
-        isInteractionEnabled = true;
-        isRenamingMode = false;
+        if (!isInteractionEnabled) return;
 
-        if (discoveredPokemon.ContainsKey(pokemon.id))
+        currentPokemon = pokemon;
+        captureTime = currentPokemon.GetCaptureTime();
+        dataLoadingSlider.maxValue = captureTime;
+        dataLoadingSlider.value = 0f;
+        dataLoadingSlider.gameObject.SetActive(true);
+
+        isCapturing = true;
+        captureProgress = 0f;
+
+        ClearDisplay();
+        nameText.text = "";
+        typeText.text = "";
+        choice1Text.text = "";
+        choice2Text.text = "";
+        pokePhoto.sprite = null;
+        hintText.text = "Hold the mouse button to scaning.";
+    }
+
+
+    private void CompletePokemonCapture()
+    {
+        isCapturing = false;
+        dataLoadingSlider.gameObject.SetActive(false);
+
+        if (!discoveredPokemon.ContainsKey(currentPokemon.id))
         {
-            DisplayDiscoveredPokemon(pokemon);
+            StartNamingProcess();
         }
         else
         {
-            DisplayNewPokemon(pokemon);
+            DisplayDiscoveredPokemon(currentPokemon);
         }
     }
 
-
-    private void DisplayNewPokemon(Pokemon pokemon)
+    private void CancelPokemonCapture()
     {
-        nameText.text = pokemon.name.english;
+        isCapturing = false;
+        dataLoadingSlider.gameObject.SetActive(false);
+        hintText.text = "Information getting failed.";
+        StartCoroutine(ResetCaptureAfterDelay(1f));
+    }
+
+    private IEnumerator ResetCaptureAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ClearDisplay();
+        isInteractionEnabled = true;
+    }
+
+    private void StartNamingProcess()
+    {
+        isRenamingMode = true;
+        newName = "";
+        nameText.text = "Name: ";
+        hintText.text = "Give it a name you like (Type, Enter to Confirm)";
+    }
+
+    private void ConfirmRenaming()
+    {
+        if (!string.IsNullOrEmpty(newName))
+        {
+            currentPokemon.name.english = newName;
+            isRenamingMode = false;
+            StartTypeGuessing();
+        }
+        else
+        {
+            hintText.text = "Please enter a valid name!";
+        }
+    }
+
+    private void StartTypeGuessing()
+    {
+        nameText.text = currentPokemon.name.english;
         typeText.text = "Type: ________";
-        correctType = pokemon.type[UnityEngine.Random.Range(0, pokemon.type.Length)];
+        correctType = currentPokemon.type[Random.Range(0, currentPokemon.type.Length)];
         string wrongType = GetRandomWrongType(correctType);
         SetColoredTypeText(choice1Text, correctType);
         SetColoredTypeText(choice2Text, wrongType);
-        if (UnityEngine.Random.value <= 0.5f)
+        if (Random.value <= 0.5f)
         {
             (choice1Text.text, choice2Text.text) = (choice2Text.text, choice1Text.text);
         }
-        hintText.text = "";
-        pokePhoto.sprite = null;
+        hintText.text = "Press Q for left choice, E for right choice.";
+        isGuessingType = true;
     }
+
+    public void MakeGuess(int choice)
+    {
+        if (!isGuessingType) return;
+
+        if ((choice == 1 && choice1Text.text.Contains(correctType)) || (choice == 2 && choice2Text.text.Contains(correctType)))
+        {
+            typeText.text = $"Type: {correctType}";
+            hintText.text = "Correct! Monster in system!";
+            StartCoroutine(LoadImage(currentPokemon.image.thumbnail));
+            currentPokemon.foundInLandType = currentLandType;
+            discoveredPokemon[currentPokemon.id] = currentPokemon;
+
+            choice1Text.text = "";
+            choice2Text.text = "";
+            isGuessingType = false;
+        }
+        else
+        {
+            hintText.text = "Hmm, that doesn't seem right.";
+        }
+    }
+
 
     private void SetColoredTypeText(TextMeshPro textComponent, string type)
     {
@@ -213,74 +315,10 @@ public class PokeDexManager : MonoBehaviour
 
     private string GetRandomWrongType(string correctType)
     {
-        string[] allTypes = { "Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy" };
+        string[] allTypes = typeColors.Keys.ToArray();
         List<string> wrongTypes = new List<string>(allTypes);
         wrongTypes.Remove(correctType);
-        return wrongTypes[UnityEngine.Random.Range(0, wrongTypes.Count)];
-    }
-
-    public void MakeGuess(int choice)
-    {
-        if ((choice == 1 && choice1Text.text.Contains(correctType)) || (choice == 2 && choice2Text.text.Contains(correctType)))
-        {
-            typeText.text = $"Type: {correctType}";
-            hintText.text = "Give it a name you like(Type, Enter to Confirm)";
-            StartCoroutine(LoadImage(currentPokemon.image.thumbnail));
-            currentPokemon.foundInLandType = currentLandType;
-            discoveredPokemon[currentPokemon.id] = currentPokemon;
-            isInteractionEnabled = false;
-            isRenamingMode = true;
-            newName = "";
-
-            // 立即清除 Choice1 和 Choice2 的文本
-            choice1Text.text = "";
-            choice2Text.text = "";
-        }
-        else
-        {
-            hintText.text = "Hmm, that doesn't seem right.";
-            DisableChoices();
-        }
-    }
-
-    private void ConfirmRenaming()
-    {
-        if (currentPokemon != null && !string.IsNullOrEmpty(newName))
-        {
-            currentPokemon.name.english = newName;
-            discoveredPokemon[currentPokemon.id] = currentPokemon;
-            isRenamingMode = false;
-            DisplayDiscoveredPokemon(currentPokemon);
-
-            // 清除 Hint 文本
-            hintText.text = "";
-        }
-    }
-
-    private void DisplayDiscoveredPokemon(Pokemon pokemon)
-    {
-        nameText.text = $"Name: {pokemon.name.english}";
-        typeText.text = $"Type: {string.Join(", ", pokemon.type)}";
-        choice1Text.text = "";
-        choice2Text.text = "";
-        hintText.text = ""; // 不再显示 "Give it a name you like"
-        StartCoroutine(LoadImage(pokemon.image.thumbnail));
-        isInteractionEnabled = false;
-    }
-
-    private void DisableChoices()
-    {
-        choice1Text.text = "";
-        choice2Text.text = "";
-        isInteractionEnabled = false;
-        cooldownTimer = cooldownDuration;
-    }
-
-    private void EnableChoices()
-    {
-        DisplayNewPokemon(currentPokemon);
-        isInteractionEnabled = true;
-        hintText.text = "";
+        return wrongTypes[Random.Range(0, wrongTypes.Count)];
     }
 
     IEnumerator LoadImage(string url)

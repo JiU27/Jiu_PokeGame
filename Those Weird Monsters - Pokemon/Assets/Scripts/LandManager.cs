@@ -16,6 +16,10 @@ public class LandManager : MonoBehaviour
     private Transform player;
     private List<Transform> availablePositions;
 
+    public GameObject oxygenStationPrefab;
+    public float oxygenStationSpawnHeight = 0.5f; // 在地面上方的高度
+    public int maxSpawnAttempts = 30; // 最大尝试生成次数
+
     void Start()
     {
         InitializeComponents();
@@ -128,12 +132,52 @@ public class LandManager : MonoBehaviour
         if (selectedPrefab != null)
         {
             GameObject newLand = Instantiate(selectedPrefab, generatePosition.position, generatePosition.rotation);
-            newLand.tag = "Land"; // 确保新生成的 Land 有正确的标签
+            newLand.tag = "Land";
             Debug.Log($"Generated new land '{selectedPrefab.name}' at position: {generatePosition.position}");
+
+            // 尝试生成 OxygenStation
+            TrySpawnOxygenStation(newLand);
         }
         else
         {
             Debug.LogError("Selected land prefab is null!");
         }
+    }
+
+    void TrySpawnOxygenStation(GameObject land)
+    {
+        if (Random.value > 0.5f) // 50% 概率生成 OxygenStation
+        {
+            Vector3 spawnPosition = FindValidSpawnPosition(land);
+            if (spawnPosition != Vector3.zero)
+            {
+                GameObject oxygenStation = Instantiate(oxygenStationPrefab, spawnPosition, Quaternion.identity, land.transform);
+                OxygenStation stationScript = oxygenStation.GetComponent<OxygenStation>();
+                if (stationScript != null)
+                {
+                    stationScript.SetActive(Random.value > 0f); // 50% 概率激活
+                }
+            }
+        }
+    }
+
+    Vector3 FindValidSpawnPosition(GameObject land)
+    {
+        Bounds landBounds = land.GetComponent<Collider>().bounds;
+        for (int i = 0; i < maxSpawnAttempts; i++)
+        {
+            Vector3 randomPoint = new Vector3(
+                Random.Range(landBounds.min.x, landBounds.max.x),
+                landBounds.max.y + oxygenStationSpawnHeight,
+                Random.Range(landBounds.min.z, landBounds.max.z)
+            );
+
+            if (!Physics.CheckSphere(randomPoint, 0.5f)) // 检查是否有碰撞
+            {
+                return randomPoint;
+            }
+        }
+        Debug.LogWarning("Failed to find a valid spawn position for OxygenStation");
+        return Vector3.zero;
     }
 }

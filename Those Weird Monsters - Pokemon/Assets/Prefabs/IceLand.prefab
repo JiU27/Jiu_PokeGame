@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d9737cafa7c4d488cc866b33e4a211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLandType: 2
+  currentLandType: 1
   monsterPrefab: {fileID: 7030577773576432011, guid: 3020eb70d9947ae48855d6f00628c922, type: 3}
   spawnPoints:
   - {fileID: 5680992877430480701}
@@ -303,11 +303,16 @@ MonoBehaviour:
   - {fileID: 8750268776393551698, guid: 364ef1c32fd1cd1448c78c9cdb093875, type: 3}
   - {fileID: 989884386135004713}
   - {fileID: 239840855751232187, guid: c13500a5d14c3b444b46a7f9d776ce03, type: 3}
+  - {fileID: 989884386135004713, guid: fb5f1688fd7faf249849928dd0e46b63, type: 3}
+  - {fileID: 989884386135004713, guid: 6a7eae29c3eac724dac9a5e290c60171, type: 3}
   landGeneratePositions:
   - {fileID: 2805358788833553758}
   - {fileID: 5375817725971974855}
   generationDistance: 20
   landCheckRadius: 2
+  oxygenStationPrefab: {fileID: 8416101205031692444, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
+  oxygenStationSpawnHeight: 0.5
+  maxSpawnAttempts: 100
 --- !u!1 &2019380844501505996
 GameObject:
   m_ObjectHideFlags: 0

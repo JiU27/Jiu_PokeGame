@@ -5,27 +5,51 @@ using UnityEngine.UI;
 using System;
 
 // 定义宝可梦数据模型
-[System.Serializable]
+[Serializable]
 public class Pokemon
 {
     public int id;
     public Name name;
     public string[] type;
     public Image image;
-    public LandType foundInLandType { get; set; } // 新添加的属性
+    public Base baseStats;
+    public LandType foundInLandType { get; set; }
 
-
-    [System.Serializable]
+    [Serializable]
     public class Name
     {
         public string english;
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Image
     {
         public string thumbnail;
         public string hires;
+    }
+
+    [Serializable]
+    public class Base
+    {
+        public int HP;
+        public int Attack;
+        public int Defense;
+        public int SpAttack;
+        public int SpDefense;
+        public int Speed;
+
+        public int GetTotal()
+        {
+            return HP + Attack + Defense + SpAttack + SpDefense + Speed;
+        }
+    }
+
+    public float GetCaptureTime()
+    {
+        int total = baseStats.GetTotal();
+        // 假设最大总和为 720，最小为 180
+        float normalizedTotal = Mathf.Clamp01((total - 180f) / 540f);
+        return Mathf.Lerp(2.5f, 5f, normalizedTotal);
     }
 }
 

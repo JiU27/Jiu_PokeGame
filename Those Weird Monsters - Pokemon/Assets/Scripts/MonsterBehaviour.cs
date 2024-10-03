@@ -8,9 +8,10 @@ public class MonsterBehaviour : MonoBehaviour
     public SpriteRenderer monsterSprite;
     private Transform playerTransform;
 
+    private bool isMouseOver = false;
+
     void Start()
     {
-        // 在游戏开始时查找名为 "Player" 的 GameObject
         GameObject player = GameObject.Find("Player");
         if (player != null)
         {
@@ -24,22 +25,20 @@ public class MonsterBehaviour : MonoBehaviour
 
     void Update()
     {
-        // 如果找到了玩家，让怪物始终朝向玩家
         if (playerTransform != null)
         {
-            // 计算朝向玩家的方向
             Vector3 directionToPlayer = playerTransform.position - transform.position;
-            directionToPlayer.y = 0; // 保持Y轴不变，防止上下倾斜
-
-            // 如果怪物和玩家不在同一位置，才进行旋转
+            directionToPlayer.y = 0;
             if (directionToPlayer != Vector3.zero)
             {
-                // 创建一个新的旋转，使怪物面向玩家
                 Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-
-                // 平滑旋转
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
             }
+        }
+
+        if (isMouseOver && Input.GetMouseButtonDown(0))
+        {
+            PokeDexManager.instance.StartPokemonCapture(pokemon);
         }
     }
 
@@ -65,5 +64,15 @@ public class MonsterBehaviour : MonoBehaviour
                 monsterSprite.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             }
         }
+    }
+
+    private void OnMouseEnter()
+    {
+        isMouseOver = true;
+    }
+
+    private void OnMouseExit()
+    {
+        isMouseOver = false;
     }
 }

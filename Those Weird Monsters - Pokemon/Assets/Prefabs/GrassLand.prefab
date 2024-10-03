@@ -817,11 +817,16 @@ MonoBehaviour:
   - {fileID: 8750268776393551698}
   - {fileID: 989884386135004713, guid: a36981602cdb7f34caddf981928fe0b0, type: 3}
   - {fileID: 239840855751232187, guid: c13500a5d14c3b444b46a7f9d776ce03, type: 3}
+  - {fileID: 989884386135004713, guid: fb5f1688fd7faf249849928dd0e46b63, type: 3}
+  - {fileID: 989884386135004713, guid: 6a7eae29c3eac724dac9a5e290c60171, type: 3}
   landGeneratePositions:
   - {fileID: 3712967526059226299}
   - {fileID: 5685846312681146625}
   generationDistance: 20
   landCheckRadius: 2
+  oxygenStationPrefab: {fileID: 989884386135004713, guid: 6a7eae29c3eac724dac9a5e290c60171, type: 3}
+  oxygenStationSpawnHeight: 0.5
+  maxSpawnAttempts: 100
 --- !u!1 &8904980907170801473
 GameObject:
   m_ObjectHideFlags: 0
