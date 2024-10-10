@@ -11,6 +11,7 @@ public class GameControl : MonoBehaviour
     public Slider timerSlider;
     public GameObject signedMonsterPrefab;
     public ScrollRect scrollView;
+    public Scrollbar verticalScrollbar;
     public Transform scrollViewContent;
     public GameObject gameUI; // 新增：对 GameUI 的引用
     public GameObject resultsUI;
@@ -18,6 +19,7 @@ public class GameControl : MonoBehaviour
     private float currentTime;
     private PokeDexManager pokeDexManager;
     private bool isGamePaused = false;
+    private GameStatistics gameStatistics;
 
     void Start()
     {
@@ -33,6 +35,7 @@ public class GameControl : MonoBehaviour
 
         gameUI.SetActive(true);
         resultsUI.SetActive(false);
+        gameStatistics = FindObjectOfType<GameStatistics>();
     }
 
     void Update()
@@ -67,6 +70,10 @@ public class GameControl : MonoBehaviour
         Time.timeScale = 0;
         gameUI.SetActive(false);
         resultsUI.SetActive(true);
+        if (verticalScrollbar != null)
+        {
+            verticalScrollbar.gameObject.SetActive(true);
+        }
         DisplayResults();
     }
 
@@ -75,7 +82,29 @@ public class GameControl : MonoBehaviour
         Time.timeScale = 1;
         gameUI.SetActive(true);
         resultsUI.SetActive(false);
+        if (verticalScrollbar != null)
+        {
+            verticalScrollbar.gameObject.SetActive(false);
+        }
         ClearResults();
+    }
+
+    void EndGame()
+    {
+        if (isGameEnded) return;
+        isGameEnded = true;
+
+        CancelInvoke("CheckAndRemoveLands");
+
+        gameUI.SetActive(false);
+        resultsUI.SetActive(true);
+        if (verticalScrollbar != null)
+        {
+            verticalScrollbar.gameObject.SetActive(true);
+        }
+
+        PauseScene();
+        DisplayResults();
     }
 
     void InitializeTimer()
@@ -105,7 +134,7 @@ public class GameControl : MonoBehaviour
     void CheckAndRemoveLands()
     {
         GameObject[] lands = GameObject.FindGameObjectsWithTag("Land");
-        if (lands.Length > 3)
+        if (lands.Length > 6)
         {
             GameObject farthestLand = lands
                 .OrderByDescending(land => Vector3.Distance(land.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position))
@@ -118,18 +147,15 @@ public class GameControl : MonoBehaviour
 
     private bool isGameEnded = false;
 
-    void EndGame()
+
+    public void AddTime(float amount)
     {
-        if (isGameEnded) return;
-        isGameEnded = true;
-
-        CancelInvoke("CheckAndRemoveLands");
-
-        gameUI.SetActive(false);
-        resultsUI.SetActive(true);
-
-        PauseScene();
-        DisplayResults();
+        currentTime = Mathf.Min(currentTime + amount, gameTime);
+        if (timerSlider != null)
+        {
+            timerSlider.value = currentTime;
+        }
+        //gameStatistics.AddOxygenStationTime(amount);
     }
 
     void PauseScene()
@@ -186,6 +212,17 @@ public class GameControl : MonoBehaviour
 
         // 最后再次刷新布局
         StartCoroutine(RefreshLayoutCoroutine());
+
+        if (verticalScrollbar != null)
+        {
+            verticalScrollbar.gameObject.SetActive(true);
+        }
+
+        // 重置滚动位置到顶部
+        if (scrollView != null)
+        {
+            scrollView.normalizedPosition = new Vector2(0, 1);
+        }
     }
 
     private IEnumerator RefreshLayoutCoroutine()
@@ -244,15 +281,6 @@ public class GameControl : MonoBehaviour
         foreach (Transform child in scrollViewContent)
         {
             Destroy(child.gameObject);
-        }
-    }
-
-    public void AddTime(float amount)
-    {
-        currentTime = Mathf.Min(currentTime + amount, gameTime);
-        if (timerSlider != null)
-        {
-            timerSlider.value = currentTime;
         }
     }
 

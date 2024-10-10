@@ -10,12 +10,16 @@ public class FirstPersonController : MonoBehaviour
     private float verticalRotation = 0f;
     private float horizontalRotation = 0f;
     private Transform playerCamera;
+    private BackgroundMusicManager backgroundMusicManager;
+    private LandManager landManager;
 
     private void Start()
     {
         playerCamera = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        backgroundMusicManager = FindObjectOfType<BackgroundMusicManager>();
+        landManager = FindObjectOfType<LandManager>();
     }
 
     private void Update()

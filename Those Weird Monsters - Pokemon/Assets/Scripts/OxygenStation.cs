@@ -35,6 +35,7 @@ public class OxygenStation : MonoBehaviour
         if (isActive && other.CompareTag("Player") && gameControl != null)
         {
             gameControl.AddTime(oxygenRefillRate * Time.deltaTime);
+            //Debug.Log("Player on it!");
         }
     }
 

@@ -37,8 +37,8 @@ public class PokeDexManager : MonoBehaviour
     private bool isGuessingType = false;
 
     private float interactionResetTimer = 0f;
-    private const float interactionResetDelay = 2f; 
-
+    private const float interactionResetDelay = 2f;
+    private GameStatistics gameStatistics;
 
     private Dictionary<string, Color> typeColors = new Dictionary<string, Color>
     {
@@ -65,6 +65,7 @@ public class PokeDexManager : MonoBehaviour
     void Awake()
     {
         dataLoadingSlider.gameObject.SetActive(false);
+        gameStatistics = FindObjectOfType<GameStatistics>();
 
         if (instance == null)
             instance = this;
@@ -200,6 +201,7 @@ public class PokeDexManager : MonoBehaviour
 
         ClearDisplay();
         hintText.text = "Hold the mouse button to scan.";
+        //gameStatistics.RecordPokemonEncounter(pokemon.id);
     }
 
 

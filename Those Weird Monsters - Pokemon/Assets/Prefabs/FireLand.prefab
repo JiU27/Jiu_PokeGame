@@ -91,7 +91,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1846407553807266444, guid: f056cc990abac564bb152d1b603231b4, type: 3}
+  - {fileID: 2100000, guid: c84a8ecdf72fc9d4db0384ceec8d9b67, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
   generationDistance: 20
   landCheckRadius: 2
   oxygenStationPrefab: {fileID: 8416101205031692444, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
-  oxygenStationSpawnHeight: 0.5
+  oxygenStationSpawnHeight: 0
   maxSpawnAttempts: 0
 --- !u!114 &4788768250384270394
 MonoBehaviour:
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 4d9afb676389044419f1fcc04c53baff, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &-949080016128380709
 MonoBehaviour:
@@ -266,7 +266,7 @@ Transform:
   m_GameObject: {fileID: 526159633070792860}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.87, y: 1.78, z: -11.47}
+  m_LocalPosition: {x: 3.87, y: 2.73, z: -11.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -297,7 +297,7 @@ Transform:
   m_GameObject: {fileID: 1633366036255376623}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.92, y: 1.38, z: -9.58}
+  m_LocalPosition: {x: -7.92, y: 2.3300002, z: -9.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -328,7 +328,7 @@ Transform:
   m_GameObject: {fileID: 3803332185393516270}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.97, y: 1.78, z: 1.29}
+  m_LocalPosition: {x: 8.97, y: 2.73, z: 1.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -359,7 +359,7 @@ Transform:
   m_GameObject: {fileID: 4146726897878296119}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.107, y: 1.07, z: 10.34}
+  m_LocalPosition: {x: -5.107, y: 2.02, z: 10.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -390,7 +390,7 @@ Transform:
   m_GameObject: {fileID: 4767553314656999907}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.466, y: 1.39, z: 10.019}
+  m_LocalPosition: {x: 6.466, y: 2.34, z: 10.019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -683,7 +683,7 @@ GameObject:
   - component: {fileID: 1673034273741068243}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Land
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -718,7 +718,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6811130892739399453}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -731,7 +731,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e939e647dcf0e014b945ca217acafa3d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -799,7 +799,7 @@ Transform:
   m_GameObject: {fileID: 7478048661483005963}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.74, y: 1.43, z: 1.29}
+  m_LocalPosition: {x: -7.74, y: 2.3799999, z: 1.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

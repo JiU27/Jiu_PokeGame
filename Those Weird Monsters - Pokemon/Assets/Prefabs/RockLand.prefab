@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 155065286485005656}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.92, y: 1.38, z: -9.58}
+  m_LocalPosition: {x: -7.92, y: 2.9299998, z: -9.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 446470983500665125}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.466, y: 1.39, z: 10.019}
+  m_LocalPosition: {x: 6.466, y: 2.94, z: 10.019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -237,7 +237,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6615434337646332195, guid: f056cc990abac564bb152d1b603231b4, type: 3}
+  - {fileID: 2100000, guid: 1f8c0a30d79ba83429bb7652ef6a3c78, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d9737cafa7c4d488cc866b33e4a211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLandType: 3
+  currentLandType: 4
   monsterPrefab: {fileID: 7030577773576432011, guid: 3020eb70d9947ae48855d6f00628c922, type: 3}
   spawnPoints:
   - {fileID: 5680992877430480701}
@@ -314,8 +314,8 @@ MonoBehaviour:
   generationDistance: 20
   landCheckRadius: 2
   oxygenStationPrefab: {fileID: 8416101205031692444, guid: 1bbdbe6740b83c84e8c410db79b4a21d, type: 3}
-  oxygenStationSpawnHeight: 0.5
-  maxSpawnAttempts: 100
+  oxygenStationSpawnHeight: -1
+  maxSpawnAttempts: 20
 --- !u!114 &2966611050951209817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,7 +345,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: fc6c4819cbf1b634fb1bb074122b6251, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &-6516800697449654826
 MonoBehaviour:
@@ -401,7 +401,7 @@ GameObject:
   - component: {fileID: 54360549697654271}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Land
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -436,7 +436,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2019380844501505996}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -449,7 +449,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 0b8c3231586d0eb46990edffa763666e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -517,7 +517,7 @@ Transform:
   m_GameObject: {fileID: 2977046897347749135}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.74, y: 1.43, z: 1.29}
+  m_LocalPosition: {x: -7.74, y: 2.98, z: 1.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -632,7 +632,7 @@ Transform:
   m_GameObject: {fileID: 3936987328975919189}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.107, y: 1.07, z: 10.34}
+  m_LocalPosition: {x: -5.107, y: 2.62, z: 10.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -768,7 +768,7 @@ Transform:
   m_GameObject: {fileID: 6964019930729703011}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.87, y: 1.78, z: -11.47}
+  m_LocalPosition: {x: 3.87, y: 3.33, z: -11.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -904,7 +904,7 @@ Transform:
   m_GameObject: {fileID: 7989169716938816014}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.97, y: 1.78, z: 1.29}
+  m_LocalPosition: {x: 8.97, y: 3.33, z: 1.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

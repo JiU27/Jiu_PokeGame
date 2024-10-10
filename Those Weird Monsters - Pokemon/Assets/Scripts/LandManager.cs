@@ -20,11 +20,23 @@ public class LandManager : MonoBehaviour
     public float oxygenStationSpawnHeight = 0.5f; // 在地面上方的高度
     public int maxSpawnAttempts = 30; // 最大尝试生成次数
 
+    private BackgroundMusicManager musicManager;
+
     void Start()
     {
         InitializeComponents();
         InitializeAvailablePositions();
         SpawnInitialMonsters();
+
+        musicManager = FindObjectOfType<BackgroundMusicManager>();
+        if (musicManager == null)
+        {
+            Debug.LogError("BackgroundMusicManager not found in the scene!");
+        }
+        else
+        {
+            musicManager.SetLandType(currentLandType);
+        }
     }
 
     void InitializeComponents()
